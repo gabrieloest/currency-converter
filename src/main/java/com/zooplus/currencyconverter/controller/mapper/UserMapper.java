@@ -15,7 +15,7 @@ public class UserMapper {
 		return new User(userDTO.getEmail(), userDTO.getPassword(), userInformation);
 	}
 
-	public static UserDTO makeuserDTO(User user) {
+	public static UserDTO makeUserDTO(User user) {
 		UserDTO.UserDTOBuilder userDTOBuilder = UserDTO.newBuilder()
 				.setEmail(user.getEmail())
 				.setPassword(user.getPassword())
@@ -28,9 +28,9 @@ public class UserMapper {
 		return userDTOBuilder.createUserDTO();
 	}
 
-	public static List<UserDTO> makeuserDTOList(Collection<User> users) {
+	public static List<UserDTO> makeUserDTOList(Collection<User> users) {
 		return users.stream()
-				.map(UserMapper::makeuserDTO)
+				.map(UserMapper::makeUserDTO)
 				.collect(Collectors.toList());
 	}
 }
