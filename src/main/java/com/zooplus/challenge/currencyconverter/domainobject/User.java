@@ -43,7 +43,7 @@ public class User implements UserDetails {
 	private Boolean deleted = false;
 
 	@Embedded
-	private UserInformation contact = new UserInformation();
+	private UserInformation userInformation = new UserInformation();
 
 	@ManyToMany
 	@JoinTable(name = "authorities", joinColumns = {
@@ -55,10 +55,11 @@ public class User implements UserDetails {
 	}
 
 	public User(@NotNull(message = "Email can not be null!") String email,
-			@NotNull(message = "Password can not be null!") String password) {
+			@NotNull(message = "Password can not be null!") String password, UserInformation userInformation) {
 		this.email = email;
 		this.password = password;
 		this.deleted = false;
+		this.userInformation = userInformation;
 	}
 
 	public Long getId() {
@@ -102,12 +103,12 @@ public class User implements UserDetails {
 		this.deleted = deleted;
 	}
 
-	public UserInformation getContact() {
-		return contact;
+	public UserInformation getUserInformation() {
+		return userInformation;
 	}
 
-	public void setContact(UserInformation contact) {
-		this.contact = contact;
+	public void setUserInformation(UserInformation userInformation) {
+		this.userInformation = userInformation;
 	}
 
 	@Override

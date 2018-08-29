@@ -2,11 +2,13 @@ package com.zooplus.challenge.currencyconverter.service;
 
 import java.util.Collection;
 
+import org.springframework.security.core.userdetails.UserDetailsService;
+
 import com.zooplus.challenge.currencyconverter.domainobject.User;
 import com.zooplus.challenge.currencyconverter.exception.ConstraintsViolationException;
 import com.zooplus.challenge.currencyconverter.exception.EntityNotFoundException;
 
-public interface UserService {
+public interface UserService extends UserDetailsService {
 
 	User find(Long id) throws EntityNotFoundException;
 
@@ -18,6 +20,6 @@ public interface UserService {
 
 	User update(Long id, User user) throws EntityNotFoundException, ConstraintsViolationException;
 
-	User findUserByEmail(String email) throws EntityNotFoundException;
+	User findUserByEmail(String email);
 
 }

@@ -27,6 +27,10 @@ public class Authority implements GrantedAuthority {
 	@Column(nullable = false)
 	private Boolean deleted = false;
 
+	public Authority(String name) {
+		this.name = name;
+	}
+
 	public Long getId() {
 		return id;
 	}

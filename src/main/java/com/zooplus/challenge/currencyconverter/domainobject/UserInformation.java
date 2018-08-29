@@ -1,6 +1,6 @@
 package com.zooplus.challenge.currencyconverter.domainobject;
 
-import java.time.ZonedDateTime;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -13,8 +13,8 @@ public class UserInformation {
 
 	@Column(nullable = false)
 	@NotNull(message = "Birth Day can not be null!")
-	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-	private ZonedDateTime birthDay;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate birthDay;
 
 	private String street;
 
@@ -24,11 +24,24 @@ public class UserInformation {
 
 	private String country;
 
-	public ZonedDateTime getBirthDay() {
+	public UserInformation() {
+	}
+
+	public UserInformation(@NotNull(message = "Birth Day can not be null!") LocalDate birthDay, String street,
+			String zip, String city, String country) {
+		super();
+		this.birthDay = birthDay;
+		this.street = street;
+		this.zip = zip;
+		this.city = city;
+		this.country = country;
+	}
+
+	public LocalDate getBirthDay() {
 		return birthDay;
 	}
 
-	public void setBirthDay(ZonedDateTime birthDay) {
+	public void setBirthDay(LocalDate birthDay) {
 		this.birthDay = birthDay;
 	}
 

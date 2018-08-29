@@ -1,15 +1,24 @@
 package com.zooplus.challenge.currencyconverter.service;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.zooplus.challenge.currencyconverter.domainobject.Authority;
 import com.zooplus.challenge.currencyconverter.domainobject.User;
 import com.zooplus.challenge.currencyconverter.exception.ConstraintsViolationException;
 import com.zooplus.challenge.currencyconverter.exception.EntityNotFoundException;
@@ -25,11 +34,11 @@ public class UserServiceImpl implements UserService {
 
 	private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(UserServiceImpl.class);
 
+	@Autowired
 	private UserRepository userRepository;
 
-	public UserServiceImpl(final UserRepository userRepository) {
-		this.userRepository = userRepository;
-	}
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 
 	/**
 	 * Selects a user by id.
@@ -105,6 +114,8 @@ public class UserServiceImpl implements UserService {
 	private User saveUser(User userDO) throws ConstraintsViolationException {
 		User user;
 		try {
+			userDO.setPassword(passwordEncoder.encode(userDO.getPassword()));
+			userDO.setAuthorities(Arrays.asList(new Authority("ROLE_USER")).stream().collect(Collectors.toSet()));
 			user = userRepository.save(userDO);
 		} catch (DataIntegrityViolationException e) {
 			LOG.warn("Some constraints are thrown due to user creation", e);
@@ -134,9 +145,24 @@ public class UserServiceImpl implements UserService {
 	 * @throws EntityNotFoundException Entity not found by that Email.
 	 */
 	@Override
-	public User findUserByEmail(String email) throws EntityNotFoundException {
+	public User findUserByEmail(String email) {
 		User user = userRepository.findOneByEmail(email).orElse(null);
 		return user;
+	}
+
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		User user = userRepository.findOneByEmail(username)
+				.orElseThrow(() -> new UsernameNotFoundException("Invalid username or password."));
+		return new org.springframework.security.core.userdetails.User(user.getEmail(),
+				user.getPassword(),
+				mapRolesToAuthorities(user.getAuthorities()));
+	}
+
+	private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Authority> authorities) {
+		return authorities.stream()
+				.map(authority -> new SimpleGrantedAuthority(authority.getName()))
+				.collect(Collectors.toList());
 	}
 
 }
