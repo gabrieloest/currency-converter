@@ -2,6 +2,7 @@ package com.zooplus.challenge.currencyconverter.dataaccessobject;
 
 import java.time.LocalDate;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -9,9 +10,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class UserDTO {
 
 	@NotNull(message = "Email can not be null!")
+	@NotBlank(message = "Email can not be blank!")
 	private String email;
 
 	@NotNull(message = "Password can not be null!")
+	@NotBlank(message = "Password can not be blank!")
 	private String password;
 
 	@NotNull(message = "Birth Day can not be null!")

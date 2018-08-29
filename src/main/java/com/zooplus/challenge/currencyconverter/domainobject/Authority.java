@@ -21,11 +21,14 @@ public class Authority implements GrantedAuthority {
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
 	private ZonedDateTime dateCreated = ZonedDateTime.now();
 
-	@Column(name = "pname", nullable = false, unique = true, length = 50)
+	@Column(name = "name", nullable = false, unique = true, length = 50)
 	private String name;
 
 	@Column(nullable = false)
 	private Boolean deleted = false;
+
+	public Authority() {
+	}
 
 	public Authority(String name) {
 		this.name = name;

@@ -32,7 +32,7 @@ public class LoggingAccessDeniedHandler implements AccessDeniedHandler {
 					+ request.getRequestURI());
 		}
 
-		response.sendRedirect(request.getContextPath() + "/access-denied");
+		response.sendRedirect(request.getContextPath() + "/error/access-denied");
 
 	}
 }

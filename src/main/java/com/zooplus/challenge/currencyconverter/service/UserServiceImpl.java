@@ -3,6 +3,7 @@ package com.zooplus.challenge.currencyconverter.service;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -22,6 +23,7 @@ import com.zooplus.challenge.currencyconverter.domainobject.Authority;
 import com.zooplus.challenge.currencyconverter.domainobject.User;
 import com.zooplus.challenge.currencyconverter.exception.ConstraintsViolationException;
 import com.zooplus.challenge.currencyconverter.exception.EntityNotFoundException;
+import com.zooplus.challenge.currencyconverter.repository.AuthorityRepository;
 import com.zooplus.challenge.currencyconverter.repository.UserRepository;
 
 /**
@@ -36,6 +38,9 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserRepository userRepository;
+
+	@Autowired
+	private AuthorityRepository authorityRepository;
 
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
@@ -115,7 +120,8 @@ public class UserServiceImpl implements UserService {
 		User user;
 		try {
 			userDO.setPassword(passwordEncoder.encode(userDO.getPassword()));
-			userDO.setAuthorities(Arrays.asList(new Authority("ROLE_USER")).stream().collect(Collectors.toSet()));
+			Optional<Authority> userAuthority = authorityRepository.findOneByName("ROLE_USER");
+			userDO.setAuthorities(Arrays.asList(userAuthority.get()).stream().collect(Collectors.toSet()));
 			user = userRepository.save(userDO);
 		} catch (DataIntegrityViolationException e) {
 			LOG.warn("Some constraints are thrown due to user creation", e);

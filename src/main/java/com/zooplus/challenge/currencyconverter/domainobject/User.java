@@ -14,6 +14,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -33,10 +34,12 @@ public class User implements UserDetails {
 
 	@Column(nullable = false)
 	@NotNull(message = "Email can not be null!")
+	@NotBlank(message = "Email can not be blank!")
 	private String email;
 
 	@Column(nullable = false)
 	@NotNull(message = "Password can not be null!")
+	@NotBlank(message = "Password can not be blank!")
 	private String password;
 
 	@Column(nullable = false)
