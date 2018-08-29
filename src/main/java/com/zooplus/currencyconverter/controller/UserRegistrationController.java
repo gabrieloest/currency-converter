@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.zooplus.currencyconverter.controller.mapper.UserMapper;
-import com.zooplus.currencyconverter.dataaccessobject.UserDTO;
+import com.zooplus.currencyconverter.datatransferobject.UserDTO;
 import com.zooplus.currencyconverter.domainobject.User;
 import com.zooplus.currencyconverter.exception.ConstraintsViolationException;
 import com.zooplus.currencyconverter.service.UserService;

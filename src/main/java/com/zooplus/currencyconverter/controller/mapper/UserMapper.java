@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.zooplus.currencyconverter.dataaccessobject.UserDTO;
+import com.zooplus.currencyconverter.datatransferobject.UserDTO;
 import com.zooplus.currencyconverter.domainobject.User;
 import com.zooplus.currencyconverter.domainobject.UserInformation;
 

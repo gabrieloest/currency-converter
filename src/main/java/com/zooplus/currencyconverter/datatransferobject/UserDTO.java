@@ -1,4 +1,4 @@
-package com.zooplus.currencyconverter.dataaccessobject;
+package com.zooplus.currencyconverter.datatransferobject;
 
 import java.time.LocalDate;
 
