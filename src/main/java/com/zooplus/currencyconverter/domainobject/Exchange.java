@@ -1,14 +1,19 @@
 package com.zooplus.currencyconverter.domainobject;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.ZonedDateTime;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -36,12 +41,23 @@ public class Exchange {
 	@Column(nullable = false, precision = 50, scale = 14)
 	private BigDecimal amount;
 
+	@Column(nullable = false)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate date;
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "exchange", cascade = { CascadeType.ALL })
+	private List<Rate> rates;
+
 	public Exchange() {
 	}
 
-	public Exchange(String currency, BigDecimal amount) {
+	public Exchange(User user, String currency, BigDecimal amount, LocalDate date, List<Rate> rates) {
+		this.user = user;
 		this.currency = currency;
 		this.amount = amount;
+		this.date = date;
+		this.rates = rates;
+		this.deleted = false;
 	}
 
 	public Long getId() {
@@ -90,6 +106,22 @@ public class Exchange {
 
 	public void setAmount(BigDecimal amount) {
 		this.amount = amount;
+	}
+
+	public LocalDate getDate() {
+		return date;
+	}
+
+	public void setDate(LocalDate date) {
+		this.date = date;
+	}
+
+	public List<Rate> getRates() {
+		return rates;
+	}
+
+	public void setRates(List<Rate> rates) {
+		this.rates = rates;
 	}
 
 }

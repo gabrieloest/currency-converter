@@ -1,5 +1,6 @@
 package com.zooplus.currencyconverter.service;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.zooplus.currencyconverter.domainobject.Exchange;
+import com.zooplus.currencyconverter.domainobject.User;
 import com.zooplus.currencyconverter.exception.ConstraintsViolationException;
 import com.zooplus.currencyconverter.exception.EntityNotFoundException;
 import com.zooplus.currencyconverter.repository.ExchangeRepository;
@@ -52,6 +54,18 @@ public class ExchangeServiceImpl implements ExchangeService {
 	@Cacheable("exchanges")
 	public List<Exchange> findAll() {
 		return StreamSupport.stream(this.exchangeRepository.findAll().spliterator(), true)
+				.collect(Collectors.toList());
+	}
+
+	/**
+	 * Get All exchanges.
+	 *
+	 * @return found exchanges
+	 */
+	@Override
+	@Cacheable("exchanges")
+	public List<Exchange> findAllByUser(User user) {
+		return StreamSupport.stream(this.exchangeRepository.findAllByUser(user).spliterator(), true)
 				.collect(Collectors.toList());
 	}
 
@@ -125,6 +139,12 @@ public class ExchangeServiceImpl implements ExchangeService {
 		Exchange exchange = exchangeRepository.findById(id)
 				.orElseThrow(() -> new EntityNotFoundException("Could not find Exchange entity with id: " + id));
 		return exchange;
+	}
+
+	@Override
+	public Collection<Exchange> getLast10() {
+
+		return null;
 	}
 
 }

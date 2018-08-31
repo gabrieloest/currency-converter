@@ -1,15 +1,22 @@
 package com.zooplus.currencyconverter.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+
+import com.zooplus.currencyconverter.service.ExchangeService;
 
 @Controller
 public class MainController {
 
+	@Autowired
+	private ExchangeService exchangeService;
+
 	@GetMapping("/")
-	public String root() {
+	public String root(Model model) {
+		exchangeService.getLast10();
+
 		return "index";
 	}
 
@@ -18,13 +25,8 @@ public class MainController {
 		return "login";
 	}
 
-	@PostMapping("/login")
-	public String loginForm(Model model) {
-		return "index";
-	}
-
 	@GetMapping("/index")
-	public String userIndex() {
+	public String index(Model model) {
 		return "index";
 	}
 }

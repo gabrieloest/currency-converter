@@ -1,8 +1,5 @@
 package com.zooplus.currencyconverter.datatransferobject;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class CurrencyDTO {
 
 	private String code;
