@@ -51,12 +51,11 @@ public class Exchange {
 	public Exchange() {
 	}
 
-	public Exchange(User user, String currency, BigDecimal amount, LocalDate date, List<Rate> rates) {
+	public Exchange(User user, String currency, BigDecimal amount, LocalDate date) {
 		this.user = user;
 		this.currency = currency;
 		this.amount = amount;
 		this.date = date;
-		this.rates = rates;
 		this.deleted = false;
 	}
 

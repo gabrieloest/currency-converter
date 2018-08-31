@@ -30,8 +30,7 @@ public class Rate {
 	public Rate() {
 	}
 
-	public Rate(Long id, String currency, BigDecimal amount, Exchange exchange) {
-		this.id = id;
+	public Rate(String currency, BigDecimal amount, Exchange exchange) {
 		this.currency = currency;
 		this.amount = amount;
 		this.exchange = exchange;

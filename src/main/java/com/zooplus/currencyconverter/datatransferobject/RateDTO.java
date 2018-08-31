@@ -7,6 +7,8 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
+import com.zooplus.currencyconverter.domainobject.User;
+
 public class RateDTO {
 
 	private Long timestamp;
@@ -14,6 +16,8 @@ public class RateDTO {
 	private String base;
 
 	private Map<String, BigDecimal> rates;
+
+	private User user;
 
 	public Long getTimestamp() {
 		return timestamp;
@@ -24,9 +28,12 @@ public class RateDTO {
 	}
 
 	public String getTimestampToString() {
-		LocalDate date = Instant.ofEpochMilli(this.timestamp).atZone(ZoneId.systemDefault()).toLocalDate();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-		return formatter.format(date);
+		return formatter.format(getTimestampAsLocalDate());
+	}
+
+	public LocalDate getTimestampAsLocalDate() {
+		return Instant.ofEpochMilli(this.timestamp).atZone(ZoneId.systemDefault()).toLocalDate();
 	}
 
 	public String getBase() {
@@ -43,6 +50,14 @@ public class RateDTO {
 
 	public void setRates(Map<String, BigDecimal> rates) {
 		this.rates = rates;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }

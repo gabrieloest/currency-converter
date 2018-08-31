@@ -13,7 +13,7 @@
 <body>
 	<div id="page" layout:fragment="content">
 		<div class="container">
-			<h1>Current</h1>
+			<h1>Historical</h1>
 
 			<form th:action="@{/exchange/historical}" th:object="${historicalDTO}" method="post">
 				<div class="form-inline">
@@ -21,16 +21,15 @@
 						<label for="date">Date</label>
 						<input id="date" class="form-control" type="date" th:field="*{date}" />
 					</div>
-				</div>
-				<div class="form-group">
-					<button type="submit" class="btn btn-success">Register</button>
-				</div>
+
+					<div class="form-group">
+						<button type="submit" class="btn btn-success">Search</button>
+					</div>
 
 
-				<div class="form-inline">
 					<div class="form-group col-lg-3 col-md-6 col-sm-12">
 						<label for="base">Base</label>
-						<p id="base" th:text="${base}" />
+						<p class="form-control" id="base" th:text="*{base}" />
 					</div>
 				</div>
 			</form>

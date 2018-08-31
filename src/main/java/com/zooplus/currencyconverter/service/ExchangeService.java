@@ -20,7 +20,7 @@ public interface ExchangeService {
 
 	Exchange update(Long id, Exchange exchange) throws EntityNotFoundException, ConstraintsViolationException;
 
-	Collection<Exchange> getLast10();
+	Collection<Exchange> getLast10(User user);
 
 	List<Exchange> findAllByUser(User user);
 

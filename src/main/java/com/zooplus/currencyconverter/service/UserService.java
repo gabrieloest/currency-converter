@@ -22,4 +22,6 @@ public interface UserService extends UserDetailsService {
 
 	User findUserByEmail(String email);
 
+	User getCurrentUser() throws EntityNotFoundException;
+
 }

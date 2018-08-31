@@ -11,8 +11,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -154,6 +156,14 @@ public class UserServiceImpl implements UserService {
 	public User findUserByEmail(String email) {
 		User user = userRepository.findOneByEmail(email).orElse(null);
 		return user;
+	}
+
+	@Override
+	public User getCurrentUser() throws EntityNotFoundException {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentPrincipalName = authentication.getName();
+		return userRepository.findOneByEmail(currentPrincipalName)
+				.orElseThrow(() -> new EntityNotFoundException("Could not find Logged User"));
 	}
 
 	@Override

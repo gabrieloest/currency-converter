@@ -142,9 +142,9 @@ public class ExchangeServiceImpl implements ExchangeService {
 	}
 
 	@Override
-	public Collection<Exchange> getLast10() {
+	public Collection<Exchange> getLast10(User user) {
 
-		return null;
+		return exchangeRepository.findTop10ByUser(user);
 	}
 
 }
