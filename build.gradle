@@ -48,15 +48,9 @@ dependencies {
 	testCompile('org.springframework.security:spring-security-test')
 }
 
-task stage(type: Copy, dependsOn: [clean, build]) {
-    from jar.archivePath
-    into project.rootDir
-    rename {
-        'app.jar'
-    }
+task copyToLib(type: Copy) {
+    into "$buildDir/lib"
+    from(configurations.compile)
 }
-stage.mustRunAfter(clean)
 
-clean << {
-    project.file('app.jar').delete()
-}
+stage.dependsOn(copyToLib)
