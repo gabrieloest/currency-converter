@@ -37,7 +37,7 @@ dependencies {
  	compile('org.webjars:jquery:3.2.1')
  	compile('nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect')
 	runtime('org.springframework.boot:spring-boot-devtools')
-	runtime('com.h2database:h2')
+	compile('com.h2database:h2')
 	runtime('mysql:mysql-connector-java')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	testCompile('org.springframework.security:spring-security-test')
