@@ -2,22 +2,14 @@ currency-converter:
   api:
     host: https://openexchangerates.org/api
     key: 550a3ed01afa4160a89561adc05fbfa9
-server:
-  port: 9090
 spring:
-  datasource:
-    name: ''
-    password: ''
-    url: jdbc:h2:mem:zooplus;DB_CLOSE_DELAY=-1
-    username: zooplus
-  h2:
-    console:
-      enabled: true
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
-      ddl-auto: create
-    open-in-view: false
+      ddl-auto: update
+      naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
     show-sql: true
   thymeleaf:
     cache: false
