@@ -1,19 +1,12 @@
+spring:
+  profiles:
+    active: dev
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
+
 currency-converter:
   api:
     host: https://openexchangerates.org/api
     key: 550a3ed01afa4160a89561adc05fbfa9
-spring:
-  jpa:
-    hibernate:
-      ddl-auto: update
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQL5Dialect
-  datasource:
-      driver-class-name: com.mysql.jdbc.Driver
-      url: jdbc:mysql://localhost:3306/zooplus?useUnicode=true&characterEncoding=utf8
-      name:
-      username: root
-      password: root
-  thymeleaf:
-    cache: true

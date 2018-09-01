@@ -1,5 +1,3 @@
-server:
-  port: 9090
 spring:
   datasource:
     name: ''
@@ -11,7 +9,12 @@ spring:
       enabled: true
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
+    open-in-view: false
     hibernate:
       ddl-auto: create
-    open-in-view: false
     show-sql: true
+  thymeleaf:
+    cache: false
+
+server:
+  port: 9090
