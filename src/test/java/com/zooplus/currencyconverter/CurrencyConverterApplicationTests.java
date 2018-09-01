@@ -1,4 +1,4 @@
-package com.zooplus.challenge.currencyconverter;
+package com.zooplus.currencyconverter;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
