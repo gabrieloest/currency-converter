@@ -15,10 +15,6 @@ apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
-task stage {
-	dependsOn build
-}
-
 jar {
     baseName = 'zooplus-currency-converter'
     version =  '0.0.1'
@@ -50,4 +46,8 @@ dependencies {
 	runtime('mysql:mysql-connector-java')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	testCompile('org.springframework.security:spring-security-test')
+}
+
+task stage {
+	dependsOn build
 }
