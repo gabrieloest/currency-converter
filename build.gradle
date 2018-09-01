@@ -43,7 +43,7 @@ dependencies {
  	compile('nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect')
 	runtime('org.springframework.boot:spring-boot-devtools')
 	compile('com.h2database:h2')
-	runtime('mysql:mysql-connector-java')
+	compile('org.postgresql:postgresql')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	testCompile('org.springframework.security:spring-security-test')
 }
