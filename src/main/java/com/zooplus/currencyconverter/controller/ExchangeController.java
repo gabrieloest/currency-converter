@@ -1,14 +1,18 @@
 package com.zooplus.currencyconverter.controller;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -51,21 +55,18 @@ public class ExchangeController {
 
 	@GetMapping(path = "/current")
 	public String showCurrentExchangeForm(Model model) {
-		RateDTO latestRate = currencyConverterService.getLatestRate();
 
 		try {
+			RateDTO latestRate = currencyConverterService.getLatestRate();
 			latestRate.setUser(userService.getCurrentUser());
-		} catch (EntityNotFoundException e1) {
-			e1.printStackTrace();
-		}
-
-		try {
 			exchangeService.create(ExchangeMapper.makeExchange(latestRate));
+			model.addAttribute("rate", latestRate);
+		} catch (EntityNotFoundException e) {
+			e.printStackTrace();
 		} catch (ConstraintsViolationException e) {
 			e.printStackTrace();
 		}
 
-		model.addAttribute("rate", latestRate);
 		return "current";
 	}
 
@@ -82,24 +83,26 @@ public class ExchangeController {
 	}
 
 	@PostMapping(path = "/historical")
-	public String historical(@ModelAttribute("historicalDTO") HistoricalDTO historicalDTO,
-			BindingResult result, Model model) {
-		RateDTO rateByDate = currencyConverterService.getRateByDate(historicalDTO.getDate());
+	public String historical(@ModelAttribute("historicalDTO") @Valid HistoricalDTO historicalDTO, BindingResult result,
+			Model model) {
 
-		try {
-			rateByDate.setUser(userService.getCurrentUser());
-		} catch (EntityNotFoundException e1) {
-			e1.printStackTrace();
+		if (result.hasErrors()) {
+			return "historical";
 		}
 
 		try {
+			RateDTO rateByDate = currencyConverterService.getRateByDate(historicalDTO.getDate());
+			rateByDate.setUser(userService.getCurrentUser());
+
 			exchangeService.create(ExchangeMapper.makeExchange(rateByDate));
+
+			historicalDTO.setBase(rateByDate.getBase());
+			historicalDTO.setRates(rateByDate.getRates());
+		} catch (EntityNotFoundException e) {
+			e.printStackTrace();
 		} catch (ConstraintsViolationException e) {
 			e.printStackTrace();
 		}
-
-		historicalDTO.setBase(rateByDate.getBase());
-		historicalDTO.setRates(rateByDate.getRates());
 
 		return "historical";
 	}

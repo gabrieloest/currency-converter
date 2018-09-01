@@ -4,14 +4,17 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Map;
 
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 public class HistoricalDTO {
 
-	@NotNull(message = "Birth Day can not be null!")
+	@NotNull(message = "Date can not be null!")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@Past(message = "Only dates in the past are valid!")
 	private LocalDate date;
 
 	private String base;

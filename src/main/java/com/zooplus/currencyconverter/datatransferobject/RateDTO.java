@@ -33,7 +33,8 @@ public class RateDTO {
 	}
 
 	public LocalDate getTimestampAsLocalDate() {
-		return Instant.ofEpochMilli(this.timestamp).atZone(ZoneId.systemDefault()).toLocalDate();
+		
+		return Instant.ofEpochMilli((long) this.timestamp * 1000).atZone(ZoneId.systemDefault()).toLocalDate();
 	}
 
 	public String getBase() {

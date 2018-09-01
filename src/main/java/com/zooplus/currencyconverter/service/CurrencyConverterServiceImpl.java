@@ -64,7 +64,8 @@ public class CurrencyConverterServiceImpl implements CurrencyConverterService {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
 		String endpoint = "/historical/".concat(formatter.format(date)).concat(".json");
-		return restTemplate.getForObject(this.getUrlWithKey(endpoint), RateDTO.class);
+		String urlWithKey = this.getUrlWithKey(endpoint);
+		return restTemplate.getForObject(urlWithKey, RateDTO.class);
 	}
 
 }
