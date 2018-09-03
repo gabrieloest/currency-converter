@@ -20,7 +20,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
-@Table(name = "app_user", schema = "zooplus")
+@Table(name = "app_user")
 public class User implements UserDetails {
 
 	@Id
@@ -48,7 +48,7 @@ public class User implements UserDetails {
 	private UserInformation userInformation = new UserInformation();
 
 	@ManyToMany
-	@JoinTable(name = "authorities", schema = "zooplus", joinColumns = {
+	@JoinTable(name = "authorities", joinColumns = {
 			@JoinColumn(name = "user_id", referencedColumnName = "id") }, inverseJoinColumns = {
 					@JoinColumn(name = "authority_id", referencedColumnName = "id") })
 	private Set<Authority> authorities = new HashSet<>();

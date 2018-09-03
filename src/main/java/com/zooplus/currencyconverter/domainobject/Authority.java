@@ -12,7 +12,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 
 @Entity
-@Table(name = "authority", schema = "zooplus")
+@Table(name = "authority")
 public class Authority implements GrantedAuthority {
 
 	@Id

@@ -19,7 +19,7 @@ import javax.persistence.Table;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Table(name = "exchange", schema = "zooplus")
+@Table(name = "exchange")
 public class Exchange {
 
 	@Id

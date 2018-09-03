@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
@@ -39,6 +40,7 @@ public class CurrencyConverterServiceImpl implements CurrencyConverterService {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
+	@Cacheable("currencies-cache")
 	public List<CurrencyDTO> getCurrencies() {
 		RequestEntity<MultiValueMap<String, String>> requestEntity = new RequestEntity<>(HttpMethod.GET,
 				URI.create(getUrl("/currencies.json")));
@@ -55,11 +57,13 @@ public class CurrencyConverterServiceImpl implements CurrencyConverterService {
 	}
 
 	@Override
+	@Cacheable("latest-cache")
 	public RateDTO getLatestRate() {
 		return restTemplate.getForObject(this.getUrlWithKey("/latest.json"), RateDTO.class);
 	}
 
 	@Override
+	@Cacheable(value = "historical-cache", key = "#date")
 	public RateDTO getRateByDate(LocalDate date) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
