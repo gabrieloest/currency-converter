@@ -13,7 +13,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -21,7 +20,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
-@Table(name = "user", uniqueConstraints = @UniqueConstraint(name = "email", columnNames = { "email" }))
+@Table(name = "app_user", schema = "zooplus")
 public class User implements UserDetails {
 
 	@Id
@@ -49,7 +48,7 @@ public class User implements UserDetails {
 	private UserInformation userInformation = new UserInformation();
 
 	@ManyToMany
-	@JoinTable(name = "authorities", joinColumns = {
+	@JoinTable(name = "authorities", schema = "zooplus", joinColumns = {
 			@JoinColumn(name = "user_id", referencedColumnName = "id") }, inverseJoinColumns = {
 					@JoinColumn(name = "authority_id", referencedColumnName = "id") })
 	private Set<Authority> authorities = new HashSet<>();
