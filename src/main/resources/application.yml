@@ -1,9 +1,9 @@
 spring:
   datasource:
-    url: jdbc:postgresql://Host:Port/DatabaseName?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory
+    url: ${DATABASE_URL}
     name:
-    username: User
-    password: Password
+    username: ${DATABASE_URL_USER}
+    password: ${DATABASE_URL_PASSWORD}
     platform: postgres
     initialization-mode: always
   jpa:
