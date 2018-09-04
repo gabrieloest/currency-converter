@@ -16,6 +16,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -23,7 +25,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Exchange {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(generator = "seqGenerator")
+	@GenericGenerator(name = "seqGenerator", strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator", parameters = {
+			@Parameter(name = "sequence_name", value = "exchange_seq") })
 	private Long id;
 
 	@Column(nullable = false)

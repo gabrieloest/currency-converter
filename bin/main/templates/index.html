@@ -16,46 +16,66 @@
 
 			<h1>Welcome to the Zooplus Currency Converter!</h1>
 
-			<div class="row" style="padding-top: 40px">
+			<div class="row" style="padding-top: 40px; padding-bottom: 80px;">
 				<div class="col-lg-4">
 					<h3>Avaliable Currencies</h3>
 					<p>Here you can see all the currencies available for conversion!</p>
-					<p>Also, configure which currencies you want to use for searches.</p>
 					<p>
-						<a class="btn btn-success" href="/exchange/currencies" role="button">Check</a>
+						<a class="btn btn-success" href="/exchange/currencies" role="button">
+							<span class="glyphicon glyphicon-usd"></span>
+							Check
+						</a>
 					</p>
 				</div>
 				<div class="col-lg-4">
-					<h3>Today Exchange</h3>
-					<p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum
-						massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.</p>
+					<h3>Today Rates</h3>
+					<p>With only one click you can find the rates of the current date!</p>
 					<p>
-						<a class="btn btn-success" href="/exchange/current" role="button">View details »</a>
+						<a class="btn btn-success" href="/exchange/current" role="button">
+							<span class="glyphicon glyphicon-flash"></span>
+							Check
+						</a>
 					</p>
 				</div>
 				<div class="col-lg-4">
-					<h3>Historical Exchange</h3>
-					<p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce
-						dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa.</p>
+					<h3>Historical Rates</h3>
+					<p>Want to know the rates in a specific date? You will find here!</p>
 					<p>
-						<a class="btn btn-success" href="/exchange/historical" role="button">View details »</a>
+						<a class="btn btn-success" href="/exchange/historical" role="button">
+							<span class="glyphicon glyphicon-calendar"></span>
+							Check
+						</a>
 					</p>
 				</div>
 			</div>
-			
-			<table class="table">
-				<thead>
-					<tr>
-						<th>Date</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="exchange : ${topTen}">
-						<td th:text="${exchange.date}"></td>
-					</tr>
-				</tbody>
-			</table>
 
+			<div class="row">
+				<div class="row" style="padding-bottom: 30px;">
+					<h1>Latest Searches</h1>
+				</div>
+				<div class="row">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>Date</th>
+								<th>Currency</th>
+								<th style="text-align: right;">Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="exchange : ${topTen}" style="text-align: initial;">
+								<td th:text="${exchange.date}"></td>
+								<td th:text="${exchange.currency}"></td>
+								<td style="text-align: right;">
+									<a th:href="${'/exchange/view/' + exchange.id}" class="btn btn-default">View</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<br>
+			<br>
 		</div>
 	</div>
 

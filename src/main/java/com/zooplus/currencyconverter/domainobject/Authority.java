@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -16,7 +18,9 @@ import org.springframework.security.core.GrantedAuthority;
 public class Authority implements GrantedAuthority {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(generator = "seqGenerator")
+	@GenericGenerator(name = "seqGenerator", strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator", parameters = {
+			@Parameter(name = "sequence_name", value = "authority_seq") })
 	private Long id;
 
 	@Column(nullable = false)

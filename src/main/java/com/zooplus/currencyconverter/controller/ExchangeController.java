@@ -1,7 +1,6 @@
 package com.zooplus.currencyconverter.controller;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,11 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.zooplus.currencyconverter.controller.mapper.ExchangeMapper;
 import com.zooplus.currencyconverter.datatransferobject.CurrencyDTO;
@@ -105,6 +105,16 @@ public class ExchangeController {
 		}
 
 		return "historical";
+	}
+
+	@RequestMapping(path = "/view/{id}", method = RequestMethod.GET)
+	public String editProduct(Model model, @PathVariable(value = "id") Long id) {
+		try {
+			model.addAttribute("exchange", exchangeService.find(id));
+		} catch (EntityNotFoundException e) {
+			e.printStackTrace();
+		}
+		return "view";
 	}
 
 }

@@ -23,14 +23,7 @@ public class MainController {
 
 	@GetMapping("/")
 	public String root(Model model) {
-		try {
-			Collection<Exchange> last10 = exchangeService.getLast10(userService.getCurrentUser());
-			model.addAttribute("topTen", last10);
-		} catch (EntityNotFoundException e) {
-			e.printStackTrace();
-		}
-
-		return "index";
+		return index(model);
 	}
 
 	@GetMapping("/login")

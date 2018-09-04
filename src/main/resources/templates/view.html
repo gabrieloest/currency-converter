@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org" layout:decorate="~{fragments/layout}">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" />
+
+<title>Exchange search ${exchange.timestampToString}</title>
+</head>
+<body>
+	<div id="page" layout:fragment="content">
+		<div class="container">
+			<h1>Current</h1>
+
+			<div class="form-inline">
+				<div class="form-group col-lg-3 col-md-6 col-sm-12">
+					<label for="base">Base</label>
+					<p id="base" th:text="${exchange.currency}" />
+				</div>
+				
+				<div class="form-group col-lg-3 col-md-6 col-sm-12">
+					<label for="date">Date</label>
+					<p id="date" th:text="${exchange.date}" />
+				</div>
+			</div>
+
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Currency</th>
+						<th>Amount</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="rate : ${exchange.rates}">
+						<td th:text="${rate.currency}"></td>
+						<td th:text="${rate.amount}"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+</body>
+<script type="text/javascript" th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
+<script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+</html>

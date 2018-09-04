@@ -11,12 +11,17 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+
 @Entity
 @Table(name = "rate")
 public class Rate {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(generator = "seqGenerator")
+	@GenericGenerator(name = "seqGenerator", strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator", parameters = {
+			@Parameter(name = "sequence_name", value = "rate_seq") })
 	private Long id;
 
 	@Column(nullable = false)
