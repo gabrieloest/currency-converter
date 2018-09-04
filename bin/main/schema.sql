@@ -1,5 +1,3 @@
-SET MODE PostgreSQL;
-
 DROP TABLE IF EXISTS app_user CASCADE;
 CREATE TABLE app_user
 (
