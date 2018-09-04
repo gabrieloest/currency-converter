@@ -1,5 +1,7 @@
 package com.zooplus.currencyconverter.service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.URI;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -18,6 +20,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import com.zooplus.currencyconverter.configuration.CurrencyConverterProperties;
+import com.zooplus.currencyconverter.datatransferobject.ConvertRateDTO;
 import com.zooplus.currencyconverter.datatransferobject.CurrencyDTO;
 import com.zooplus.currencyconverter.datatransferobject.RateDTO;
 
@@ -70,6 +73,19 @@ public class CurrencyConverterServiceImpl implements CurrencyConverterService {
 		String endpoint = "/historical/".concat(formatter.format(date)).concat(".json");
 		String urlWithKey = this.getUrlWithKey(endpoint);
 		return restTemplate.getForObject(urlWithKey, RateDTO.class);
+	}
+
+	@Override
+	public ConvertRateDTO convertValues(String fromCurrency, BigDecimal fromValue, String toCurrency) {
+		RateDTO rates = getLatestRate();
+
+		BigDecimal fromRate = rates.getRates().get(fromCurrency);
+		BigDecimal base = fromValue.divide(fromRate, 4, RoundingMode.HALF_UP);
+
+		BigDecimal toRate = rates.getRates().get(toCurrency);
+		BigDecimal convertedRate = base.multiply(toRate);
+
+		return new ConvertRateDTO(fromCurrency, fromValue, toCurrency, convertedRate);
 	}
 
 }

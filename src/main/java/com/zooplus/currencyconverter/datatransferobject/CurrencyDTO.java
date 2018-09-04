@@ -31,4 +31,8 @@ public class CurrencyDTO {
 		this.description = description;
 	}
 
+	public String getCompleteDescription() {
+		return code.concat(" - ").concat(description);
+	}
+
 }

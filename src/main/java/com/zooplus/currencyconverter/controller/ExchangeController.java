@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.zooplus.currencyconverter.controller.mapper.ExchangeMapper;
+import com.zooplus.currencyconverter.datatransferobject.ConvertRateDTO;
 import com.zooplus.currencyconverter.datatransferobject.CurrencyDTO;
 import com.zooplus.currencyconverter.datatransferobject.HistoricalDTO;
 import com.zooplus.currencyconverter.datatransferobject.RateDTO;
@@ -30,6 +32,7 @@ import com.zooplus.currencyconverter.service.UserService;
 
 @Controller
 @RequestMapping("/exchange")
+@SessionAttributes("currencies")
 public class ExchangeController {
 
 	@Autowired
@@ -44,6 +47,16 @@ public class ExchangeController {
 	@ModelAttribute("historicalDTO")
 	public HistoricalDTO historicalDTO() {
 		return new HistoricalDTO();
+	}
+
+	@ModelAttribute("convertRateDTO")
+	public ConvertRateDTO convertRateDTO() {
+		return new ConvertRateDTO();
+	}
+
+	@ModelAttribute("currencies")
+	public List<CurrencyDTO> currencies() {
+		return currencyConverterService.getCurrencies();
 	}
 
 	@GetMapping(path = "/currencies")
@@ -115,6 +128,27 @@ public class ExchangeController {
 			e.printStackTrace();
 		}
 		return "view";
+	}
+
+	@GetMapping(path = "/convert")
+	public String showConvertForm(Model model) {
+		return "convert";
+	}
+
+	@PostMapping(path = "/convert")
+	public String convert(@ModelAttribute("convertRateDTO") @Valid ConvertRateDTO convertRateDTO,
+			BindingResult result) {
+
+		if (result.hasErrors()) {
+			return "convert";
+		}
+
+		ConvertRateDTO convertValues = currencyConverterService.convertValues(convertRateDTO.getFromCurrency(),
+				convertRateDTO.getFromValue(), convertRateDTO.getToCurrency());
+
+		convertRateDTO.setToValue(convertValues.getToValue());
+
+		return "convert";
 	}
 
 }

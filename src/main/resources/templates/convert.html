@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org" layout:decorate="~{fragments/layout}">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" />
+
+<title>Registration</title>
+</head>
+<body>
+	<div id="page" layout:fragment="content">
+		<div class="container">
+			<h1>Currency Converter</h1>
+
+			<form th:action="@{/exchange/convert}" th:object="${convertRateDTO}" method="post" class="form">
+				<div class="form">
+
+					<div class="form-group col-md-6 col-md-offset-3" th:classappend="${#fields.hasErrors('fromValue')}? 'has-error':''">
+						<label for="fromValue" class="control-label">From Value</label>
+						<input id="fromValue" class="form-control" th:field="*{fromValue}" />
+						<p class="error-message" th:each="error : ${#fields.errors('fromValue')}" th:text="${error}">Validation error</p>
+					</div>
+
+					<div class="form-group col-md-6 col-md-offset-3" th:classappend="${#fields.hasErrors('fromCurrency')}? 'has-error':''">
+						<label for="fromCurrency" class="control-label">From Currency</label>
+						<select id="fromCurrency" class="form-control" th:field="*{fromCurrency}">
+							<option th:each="currency : ${currencies}" th:value="${currency.code}" th:text="${currency.completeDescription}">Currency</option>
+						</select>
+					</div>
+
+
+					<div class="form-group col-md-6 col-md-offset-3" th:classappend="${#fields.hasErrors('toCurrency')}? 'has-error':''">
+						<label for="toCurrency" class="control-label">To Currency</label>
+						<select id="toCurrency" class="form-control" th:field="*{toCurrency}">
+							<option th:each="currency : ${currencies}" th:value="${currency.code}" th:text="${currency.completeDescription}">Currency</option>
+						</select>
+					</div>
+					
+					<div class="form-group col-md-6 col-md-offset-3">
+						<label for="toValue" class="control-label">To Value</label>
+						<p class="form-control" id="toValue" th:text="*{toValue}" />
+					</div>
+
+					<div class="form-group col-md-6 col-md-offset-3">
+						<button type="submit" class="btn btn-success">Search</button>
+					</div>
+				</div>
+			</form>
+
+		</div>
+	</div>
+
+</body>
+<script type="text/javascript" th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
+<script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+</html>
