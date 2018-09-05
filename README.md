@@ -2,7 +2,8 @@
 
 [![Build Status](https://travis-ci.org/gabrieloest/currency-converter.svg?branch=master)](https://travis-ci.org/gabrieloest/currency-converter)
 
-[![Heroku](https://zooplus-currency-converter.herokuapp.com/?app=heroku-badge)]
+## Running Application
+  https://zooplus-currency-converter.herokuapp.com/
 
 ## 0. Pre-requirements
 + Java 8
