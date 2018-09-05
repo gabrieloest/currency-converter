@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
@@ -28,6 +30,8 @@ public class Authority implements GrantedAuthority {
 	private ZonedDateTime dateCreated = ZonedDateTime.now();
 
 	@Column(name = "name", nullable = false, unique = true, length = 50)
+	@NotNull(message = "Name can not be null!")
+	@NotBlank
 	private String name;
 
 	@Column(nullable = false)
